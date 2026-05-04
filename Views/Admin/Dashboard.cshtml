@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+
+        .header {
+            background-color: #FFC1CC; /* Pink background */
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+            .header h1 {
+                margin: 0;
+                font-size: 24px;
+                color: #333;
+            }
+
+        .nav-container {
+            background-color: #FFC1CC; /* Pink background */
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+            .nav-container a {
+                display: inline-block;
+                background-color: #ccc; /* Default gray background */
+                color: #000;
+                padding: 10px 20px;
+                margin: 0 10px;
+                border-radius: 5px;
+                text-decoration: none;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+                .nav-container a:hover {
+                    background-color: #bbb; /* Slightly darker gray on hover */
+                }
+
+                .nav-container a.logout {
+                    background-color: #FF3333; /* Red background for LOGOUT */
+                    color: white;
+                }
+
+                    .nav-container a.logout:hover {
+                        background-color: #CC0000; /* Darker red on hover */
+                    }
+
+        .background-image {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ADMIN PANEL</h1>
+    </div>
+
+    <div class="nav-container">
+        <a href="@Url.Action("Index", "Doctor")">VIEW DOCTOR</a>
+        <a href="@Url.Action("Create", "Doctor")">ADD DOCTOR</a>
+        <a href="@Url.Action("Index", "Appointment")">APPROVAL</a>
+        <a href="@Url.Action("Index", "Home")" class="logout">LOGOUT</a>
+    </div>
+
+    <img src="~/images/image1.png" alt="Doctors reviewing chart" class="background-image" />
+</body>
+</html>

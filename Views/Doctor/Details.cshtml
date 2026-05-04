@@ -1,0 +1,142 @@
+﻿@model Test1.Models.Doctor
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Details</title>
+    <style>
+        body {
+            background-image: url('/images/your-background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .nav-container {
+            background-color: #FFC1CC;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .nav-container a {
+                display: inline-block;
+                background-color: #ccc;
+                color: #000;
+                padding: 10px 20px;
+                margin: 0 10px;
+                border-radius: 5px;
+                text-decoration: none;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+                .nav-container a:hover {
+                    background-color: #bbb;
+                }
+
+                .nav-container a.logout {
+                    background-color: #FF3333;
+                    color: white;
+                }
+
+                    .nav-container a.logout:hover {
+                        background-color: #CC0000;
+                    }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+        }
+
+        dl {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        dt {
+            width: 30%;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+
+        dd {
+            width: 70%;
+            padding: 10px 0;
+            margin: 0;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+            .actions a {
+                display: inline-block;
+                margin: 0 10px;
+                background-color: navy;
+                color: white;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+
+                .actions a:hover {
+                    background-color: darkblue;
+                }
+    </style>
+</head>
+<body>
+
+    <div class="nav-container">
+        <a href="@Url.Action("Index", "Doctor")">VIEW DOCTOR</a>
+        <a href="@Url.Action("Create", "Doctor")">ADD DOCTOR</a>
+        <a href="@Url.Action("Index", "Appointment")">APPROVAL</a>
+        <a href="@Url.Action("Index", "Home")" class="logout">LOGOUT</a>
+    </div>
+
+    <div class="container">
+        <h1>Doctor Details</h1>
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+            <dd>@Html.DisplayFor(model => model.Email)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Password)</dt>
+            <dd>@Html.DisplayFor(model => model.Password)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Specialty)</dt>
+            <dd>@Html.DisplayFor(model => model.Specialty.Name)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.IsApproved)</dt>
+            <dd>@Html.DisplayFor(model => model.IsApproved)</dd>
+        </dl>
+
+        <div class="actions">
+            <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+</body>
+</html>

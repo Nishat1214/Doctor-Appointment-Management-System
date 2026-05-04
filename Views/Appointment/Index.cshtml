@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Test1.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Appointment Information";
+}
+
+<style>
+    body {
+        background-image: url('/images/doctors-background.jpg'); /* Adjust path as needed */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .appointment-table {
+        background-color: white;
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .appointment-table th, .appointment-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .appointment-table th {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .appointment-table tr:nth-child(odd) {
+            background-color: #fefefe;
+        }
+
+        .appointment-table tr:nth-child(even) {
+            background-color: #e6f2ff;
+        }
+
+    .btn-approve {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-approve:hover {
+            background-color: #218838;
+        }
+
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+    }
+
+    .nav-container {
+        background-color: #FFC1CC; /* Pink background */
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+        .nav-container a {
+            display: inline-block;
+            background-color: #ccc; /* Default gray background */
+            color: #000;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+            .nav-container a:hover {
+                background-color: #bbb; /* Slightly darker gray on hover */
+            }
+
+            .nav-container a.logout {
+                background-color: #FF3333; /* Red background for LOGOUT */
+                color: white;
+            }
+
+                .nav-container a.logout:hover {
+                    background-color: #CC0000; /* Darker red on hover */
+                }
+
+</style>
+<div class="nav-container">
+    <a href="@Url.Action("Index", "Doctor")">VIEW DOCTOR</a>
+    <a href="@Url.Action("Create", "Doctor")">ADD DOCTOR</a>
+    <a href="@Url.Action("Index", "Appointment")">APPROVAL</a>
+    <a href="@Url.Action("Index", "Home")" class="logout">LOGOUT</a>
+</div>
+<h2>APPOINTMENT INFORMATION</h2>
+
+@if (Model.Any())
+{
+    <table class="appointment-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Patient Name</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Age</th>
+                <th>Mobile</th>
+         
+                <th>Doctor</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Patient?.Name</td>
+                    <td>@item.Patient?.Email</td>
+                    <td>@item.AppointmentDate.ToString("yyyy-MM-dd")</td>
+                    <td>@item.Patient?.Age</td>
+                    <td>@item.Patient?.Mobile</td>
+               
+                    <td>@item.Doctor?.Name</td>
+                    <td>@item.AppointmentDate.ToString("HH:mm:ss")</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @if (item.Status != "Approved")
+                        {
+                            <form asp-action="Approve" asp-route-id="@item.Id" method="post" style="display:inline">
+                                <button type="submit" class="btn-approve">Approve</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span style="color: green; font-weight: bold;">Approved</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p style="text-align:center; margin-top: 20px; color: #555;">No appointments found.</p>
+}

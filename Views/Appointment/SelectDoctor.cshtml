@@ -1,0 +1,149 @@
+﻿@model IEnumerable<Test1.Models.Doctor>
+
+@{
+    Layout = null;
+    int specialtyId = ViewBag.SpecialtyId;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Doctor</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .dropdown-container {
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 12px;
+            width: 350px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            background-color: white;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+            select:focus {
+                border-color: #28a745;
+            }
+
+        .select-btn {
+            padding: 12px 25px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .select-btn:hover {
+                background-color: #218838;
+            }
+
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar {
+            background-color: #FFC1CC;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+            .navbar a {
+                text-decoration: none;
+                color: #0000EE;
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+        .back-link:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a asp-controller="Home" asp-action="DoctorPatient">HOME</a>
+        <a asp-controller="Appointment" asp-action="SelectSpeciality">APPOINTMENT</a>
+    </div>
+    <div class="container">
+        <h1>Select a Doctor</h1>
+        @if (Model.Any())
+        {
+            <div class="dropdown-container">
+                <select id="doctorSelect" name="doctorId">
+                    <option value="">-- Select a Doctor --</option>
+                    @foreach (var doctor in Model)
+                    {
+                        <option value="@doctor.Id">@doctor.Name (Specialty: @doctor.Specialty.Name)</option>
+                    }
+                </select>
+                <br /><br />
+                <a asp-action="Create"
+                   asp-route-doctorId="@Model.FirstOrDefault()?.Id"
+                   asp-route-specialtyId="@specialtyId"
+                   class="select-btn"
+                   id="selectButton"
+                   onclick="submitSelection()">Select</a>
+            </div>
+        }
+        else
+        {
+            <p class="no-data">No doctors available for this specialty.</p>
+        }
+    </div>
+    <script>
+        function submitSelection() {
+            var select = document.getElementById("doctorSelect");
+            var selectedValue = select.value;
+            if (selectedValue) {
+                window.location.href = "@Url.Action("Create", "Appointment")?doctorId=" + selectedValue + "&specialtyId=@specialtyId";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+﻿@model Test1.Models.Doctor
+
+@{
+    ViewData["Title"] = "Edit Doctor";
+    Layout = null;
+    var doctorId = Model?.Id ?? 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+        }
+
+        .header {
+            background-color: #FFC1CC;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .buttons a,
+        .buttons button {
+            background-color: #FFC1CC;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .buttons button {
+            background-color: #0066CC;
+            color: white;
+        }
+
+            .buttons a:hover,
+            .buttons button:hover {
+                background-color: #FFB6C1;
+            }
+
+            .buttons button:hover {
+                background-color: #0052A3;
+            }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .content {
+            background-color: rgba(255, 255, 255, 0.95);
+            margin: 50px auto;
+            padding: 30px;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: navy;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-check {
+            margin-bottom: 15px;
+        }
+
+        .form-check-label {
+            margin-left: 5px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: navy;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: gray;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: darkblue;
+        }
+
+        .btn-secondary:hover {
+            background-color: dimgray;
+        }
+    </style>
+</head>
+<body>
+    <!-- Doctor Dashboard Header -->
+    <div class="header">
+        <div class="buttons">
+            <a asp-controller="Doctor" asp-action="Appointments" asp-route-doctorId="@doctorId">VIEW APPOINTMENT</a>
+            <a asp-controller="Doctor" asp-action="Edit" asp-route-id="@doctorId">UPDATE</a>
+            <form asp-action="Index" asp-controller="Home" method="post" style="display:inline;">
+                @Html.AntiForgeryToken()
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+ 
+    </div>
+
+    <!-- Edit Form -->
+    <div class="content">
+        <h1>EDIT DOCTOR INFORMATION</h1>
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SpecialtyId"></label>
+                <select asp-for="SpecialtyId" class="form-control" asp-items="ViewBag.SpecialtyId">
+                    <option value="">-- Select Specialty --</option>
+                </select>
+                <span asp-validation-for="SpecialtyId" class="text-danger"></span>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" asp-for="IsApproved" />
+                <label class="form-check-label" asp-for="IsApproved"></label>
+            </div>
+
+            <div class="btn-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            
+            </div>
+        </form>
+    </div>
+
+  
+</body>
+</html>

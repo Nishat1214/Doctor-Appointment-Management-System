@@ -1,0 +1,157 @@
+﻿@{
+    ViewData["Title"] = "Doctor Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #FFC1CC;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+            .header a {
+                color: #0000EE;
+                text-decoration: none;
+                margin-right: 50px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+                .header a:last-child {
+                    margin-right: 0;
+                }
+
+        .background-image {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .login-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 1;
+            max-width: 300px;
+        }
+
+            .login-container h2 {
+                margin-bottom: 20px;
+                font-size: 24px;
+            }
+
+            .login-container .form-group {
+                margin-bottom: 15px;
+                text-align: left;
+            }
+
+            .login-container label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .login-container input[type="email"],
+            .login-container input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                background-color: #E6F0FA;
+            }
+
+            .login-container button {
+                background-color: #0066CC;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                width: 100%;
+                font-size: 16px;
+            }
+
+      .navbar{
+            background-color: #FFC1CC;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+      }
+
+            
+            .navbar a {
+                text-decoration: none;
+                color: #0000EE; /* Blue links */
+                font-weight: bold;
+                font-size: 20px;
+            
+            }
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a asp-controller="Home" asp-action="DoctorPatient">HOME</a>
+        <a asp-controller="Doctor" asp-action="Login">DOCTOR LOGIN</a>
+   
+        <a asp-controller="Appointment" asp-action="SelectSpeciality">APPOINTMENT</a>
+    </div>
+
+    <img src="~/images/doctors-background.jpg" alt="Doctors background" class="background-image" />
+
+    <div class="login-container">
+        <h2>DOCTOR LOGIN</h2>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="error-message">@ViewBag.ErrorMessage</div>
+        }
+
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" required />
+            </div>
+
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" name="password" required />
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

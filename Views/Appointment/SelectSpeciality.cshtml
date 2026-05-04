@@ -1,0 +1,140 @@
+﻿@model IEnumerable<Test1.Models.Speciality>
+
+@{
+    ViewData["Title"] = "Select Specialty";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #FFC1CC;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+            .navbar a {
+                text-decoration: none;
+                color: #0000EE;
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+        .background-image {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .select-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 1;
+            width: 350px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #E6F0FA;
+            margin-bottom: 20px;
+        }
+
+        .select-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            .select-btn:hover {
+                background-color: #218838;
+            }
+
+        .no-data {
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a asp-controller="Home" asp-action="DoctorPatient">HOME</a>
+   
+        <a asp-controller="Appointment" asp-action="SelectSpeciality">APPOINTMENT</a>
+    </div>
+
+    <img src="~/images/doctors-background.jpg" alt="Doctors background" class="background-image" />
+
+    <div class="select-container">
+        <h2>Select a Specialty</h2>
+        @if (Model.Any())
+        {
+            <select id="specialtySelect" name="specialtyId">
+                <option value="">-- Select a Specialty --</option>
+                @foreach (var specialty in Model)
+                {
+                    <option value="@specialty.Id">@specialty.Name</option>
+                }
+            </select>
+
+            <button class="select-btn" onclick="submitSelection()">Select</button>
+        }
+        else
+        {
+            <div class="no-data">No specialties available.</div>
+        }
+    </div>
+
+    <script>
+        function submitSelection() {
+            var select = document.getElementById("specialtySelect");
+            var selectedValue = select.value;
+            if (selectedValue) {
+                window.location.href = "@Url.Action("SelectDoctor", "Appointment")?specialtyId=" + selectedValue;
+            }
+        }
+    </script>
+</body>
+</html>
